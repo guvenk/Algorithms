@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace Algorithms
 {
@@ -10,7 +10,7 @@ namespace Algorithms
     {
         public static void Main(string[] args)
         {
-            Backtracking.SolveKT();
+
             Console.ReadKey();
         }
     }
