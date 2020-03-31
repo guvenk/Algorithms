@@ -57,7 +57,6 @@ namespace Algorithms
             Console.WriteLine("Following is Depth First Traversal " +
                               "(starting from vertex 2)");
 
-
             g.DFS(2, visited);
 
             Console.ReadKey();
