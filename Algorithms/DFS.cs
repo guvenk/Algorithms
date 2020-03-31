@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithms
 {
@@ -26,7 +25,7 @@ namespace Algorithms
         }
 
         // A function used by DFS  
-        void DFSUtil(int v, bool[] visited)
+        void DFS(int v, bool[] visited)
         {
             // Mark the current node as visited 
             // and print it  
@@ -37,10 +36,8 @@ namespace Algorithms
             // adjacent to this vertex  
             List<int> vList = neighbours[v];
             foreach (var n in vList)
-            {
                 if (!visited[n])
-                    DFSUtil(n, visited);
-            }
+                    DFS(n, visited);
         }
 
         // Driver Code 
@@ -48,6 +45,7 @@ namespace Algorithms
         {
             int totalVertice = 4;
             GraphDFS g = new GraphDFS(totalVertice);
+            bool[] visited = new bool[totalVertice];
 
             g.AddEdge(0, 1);
             g.AddEdge(0, 2);
@@ -59,9 +57,8 @@ namespace Algorithms
             Console.WriteLine("Following is Depth First Traversal " +
                               "(starting from vertex 2)");
 
-            bool[] visited = new bool[totalVertice];
 
-            g.DFSUtil(2, visited);
+            g.DFS(2, visited);
 
             Console.ReadKey();
         }
