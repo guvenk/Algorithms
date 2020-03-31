@@ -10,7 +10,7 @@ namespace Algorithms
         static readonly int M = 8;
         static readonly int N = 8;
 
-        public static void PrintSolution()
+        public static void Usage()
         {
             int[,] screen = {
                 { 1, 1, 1, 1, 1, 1, 1, 1},

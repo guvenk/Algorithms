@@ -6,14 +6,14 @@ namespace Algorithms
 {
     public class GraphBFS
     {
-        public Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
+        public Dictionary<int, List<int>> neighbours = new Dictionary<int, List<int>>();
 
-        public void addEdge(int v, int w)
+        public void AddEdge(int v, int w)
         {
-            if (adj.Keys.Contains(v))
-                adj[v].Add(w);
+            if (neighbours.Keys.Contains(v))
+                neighbours[v].Add(w);
             else
-                adj.Add(v, new List<int>() { w });
+                neighbours.Add(v, new List<int>() { w });
         }
 
         public void BFS(int num)
@@ -28,9 +28,9 @@ namespace Algorithms
                 num = queue.Dequeue();
                 Console.Write(num + " ");
 
-                if (adj.Keys.Contains(num))
+                if (neighbours.Keys.Contains(num))
                 {
-                    List<int> neighbors = adj[num];
+                    List<int> neighbors = neighbours[num];
                     foreach (var n in neighbors)
                     {
                         if (!visited.Contains(n))
@@ -47,12 +47,12 @@ namespace Algorithms
         {
             GraphBFS g = new GraphBFS();
 
-            g.addEdge(1, 4);
-            g.addEdge(0, 1);
-            g.addEdge(0, 2);
-            g.addEdge(1, 2);
-            g.addEdge(2, 0);
-            g.addEdge(2, 3);
+            g.AddEdge(1, 4);
+            g.AddEdge(0, 1);
+            g.AddEdge(0, 2);
+            g.AddEdge(1, 2);
+            g.AddEdge(2, 0);
+            g.AddEdge(2, 3);
 
             g.BFS(2);
         }
