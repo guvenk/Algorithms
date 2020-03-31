@@ -7,13 +7,11 @@ namespace Algorithms
     // graph.IsBridge(2, 3)
     class FindBridgeNodes
     {
-        readonly int V;
         public int FirstVertex { get; internal set; }
         public static Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
-        public FindBridgeNodes(int v, int firstVertex)
+        public FindBridgeNodes(int firstVertex)
         {
-            V = v;
             FirstVertex = firstVertex;
         }
 
@@ -36,7 +34,7 @@ namespace Algorithms
             adj[w].Remove(v);
         }
 
-        void DFS(int v, bool[] visited)
+        void DFS(int v, Dictionary<int, bool> visited)
         {
             visited[v] = true;
 
@@ -48,15 +46,17 @@ namespace Algorithms
 
         bool IsConnected()
         {
-            bool[] visited = new bool[V];
+            Dictionary<int, bool> visited = new Dictionary<int, bool>();
+            foreach (var item in adj)
+                visited.Add(item.Key, false);
 
             // Find all reachable vertices from first vertex 
             DFS(FirstVertex, visited);
 
             // If set of reachable vertices includes all, 
             // return true. 
-            for (int i = 1; i < V; i++)
-                if (visited[i] == false)
+            foreach (var i in visited)
+                if (i.Value == false)
                     return false;
 
             return true;
@@ -64,7 +64,7 @@ namespace Algorithms
 
         public bool IsBridge(int u, int v)
         {
-            // Remove edge from undirected graph 
+            // Remove edge from undirected graph
             RemoveEdge(u, v);
 
             bool res = IsConnected();
