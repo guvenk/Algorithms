@@ -7,6 +7,25 @@ namespace UnitTests
 {
     public class UnitTest
     {
+        [Theory]
+        [InlineData("{[()]}", "YES")]
+        [InlineData("{[(])}", "NO")]
+        [InlineData("{{[[(())]]}}", "YES")]
+        [InlineData("}][}}(}][))]", "NO")]
+        [InlineData("[](){()}", "YES")]
+        [InlineData("()", "YES")]
+        [InlineData("({}([][]))[]()", "YES")]
+        [InlineData("{)[](}]}]}))}(())(", "NO")]
+        [InlineData("([[)", "NO")]
+        public void Test1(string word, string expected)
+        {
+            string ans = BalancedParanthesis.IsBalanced(word);
+
+            Assert.Equal(expected, ans);
+            Assert.Equal(expected, ans);
+            Assert.Equal(expected, ans);
+        }
+
         //[Theory]
         //[InlineData("A2Le", "2pL1", true)]
         //[InlineData("ba1", "1Ad", false)]
@@ -21,8 +40,6 @@ namespace UnitTests
         //    Assert.Equal(expected, result);
 
         //}
-
-
 
     }
 }
