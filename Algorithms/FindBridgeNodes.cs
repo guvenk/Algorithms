@@ -3,7 +3,9 @@ using System.Linq;
 
 namespace Algorithms
 {
+    // https://www.geeksforgeeks.org/bridge-in-a-graph/
     // Check if removing a given edge disconnects a graph
+    // https://www.geeksforgeeks.org/check-removing-given-edge-disconnects-given-graph/
     // graph.IsBridge(2, 3)
     class FindBridgeNodes
     {
