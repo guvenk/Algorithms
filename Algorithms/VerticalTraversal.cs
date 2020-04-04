@@ -46,10 +46,7 @@ namespace Algorithms
             if (dictionary.ContainsKey(horDist))
                 dictionary[horDist].Add(root.val);
             else
-            {
                 dictionary.Add(horDist, new List<int> { root.val });
-
-            }
 
             // Store current node in dictionary
 
