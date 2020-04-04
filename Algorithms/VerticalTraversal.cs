@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Algorithms
@@ -88,6 +89,50 @@ namespace Algorithms
                 left = null;
                 right = null;
             }
+        }
+
+        // ******************* ANOTHER IMPLEMENTATION **********************
+
+        // this one takes not only x but also y coordinate into consideration while printing the result.
+        public IList<IList<int>> VerticalTraversal2(TreeNode root)
+        {
+            var valsDict = new Dictionary<int, List<(int, int)>>();
+
+            AddValue(valsDict, root, 0, 0);
+
+            IList<IList<int>> resultSet = new List<IList<int>>();
+
+            for (int i = 0; i < valsDict.Count; i++)
+            {
+                resultSet.Add(new List<int>());
+            }
+
+            var min = valsDict.Keys.Min();
+
+            foreach (var val in valsDict)
+            {
+                var index = val.Key + -1 * min;
+                resultSet[index] = (((val.Value.OrderBy(v => v.Item1)).OrderByDescending(y => y.Item2)).Select(i => i.Item1)).ToList();
+            }
+
+            return resultSet;
+        }
+
+        private void AddValue(Dictionary<int, List<(int, int)>> dict, TreeNode node, int x, int y)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            if (!dict.ContainsKey(x))
+            {
+                dict[x] = new List<(int, int)>();
+            }
+
+            dict[x].Add((node.val, y));
+            AddValue(dict, node.left, x - 1, y - 1);
+            AddValue(dict, node.right, x + 1, y - 1);
         }
     }
 }
