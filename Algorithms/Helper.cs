@@ -6,25 +6,36 @@ using System.Text;
 
 namespace Algorithms
 {
-    // Largest Number formed from an Array:             
-    // arrange them in such a manner that they form the largest number possible 
-    // usage:
-    //IComparer myComparer = new myClass();
-    //Array.Sort(arr, myComparer);
-    public class MyClass : IComparer
-    {
-        public int Compare(object x, object y)
-        {
-            string XY = x.ToString() + y.ToString();
-            string YX = y.ToString() + x.ToString();
-
-            // YX and XY are reversly compared
-            return string.Compare(YX, XY);
-        }
-    }
-
     public class Helper
     {
+        public static string CompressString(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            int count = 1;
+            char prev = str[0];
+            for (int i = 1; i < str.Length; i++)
+            {
+                char curr = str[i];
+                if (prev == curr)
+                    count++;
+                else
+                {
+                    if (count != 1)
+                        sb.Append(count);
+                    sb.Append(prev);
+                    prev = curr;
+                    count = 1;
+                }
+            }
+            if (count != 1)
+                sb.Append(count);
+            sb.Append(prev);
+            if (str.Length < sb.Length)
+                return str;
+            else
+                return sb.ToString();
+        }
+
         public static bool AreStringsEqual(string a, string b)
         {
             a = ReplaceNumbersWithDotsInString(a);
@@ -86,7 +97,7 @@ namespace Algorithms
         //var result2 = MinHoursGuven(4, 8, grid);
         //Console.WriteLine(result2);
         // distance to reach the furthest "0" from "1"
-        static int MinHoursGuven(int rows, int cols, int[,] grid)
+        static int FindFurthestDistanceInGrid(int rows, int cols, int[,] grid)
         {
             UpdateMatrix(rows, cols, grid);
             int max = 0;
@@ -144,7 +155,6 @@ namespace Algorithms
             return matrix;
         }
 
-
         public static int LongestPalindromeCount(string s)
         {
             int[] arr = new int[58];
@@ -165,39 +175,6 @@ namespace Algorithms
 
             if (count < s.Length)
                 count++;
-            return count;
-        }
-
-        public static int OddCells(int n, int m, int[][] indices)
-        {
-            // indices array indekilerdeki pozisyonları arttırıyor
-            //int[][] arr = new int[][] {
-            //    new int[] { 1, 1 },
-            //    new int[] { 0, 0 }
-            //};
-            //var result = OddCells(2, 2, arr);
-            int[,] arr = new int[n, m];
-            int count = 0;
-            for (int i = 0; i < indices.Length; i++)
-            {
-                var row = indices[i][0];
-                var column = indices[i][1];
-                for (int j = 0; j < m; j++)
-                    arr[row, j]++;
-                for (int j = 0; j < n; j++)
-                    arr[j, column]++;
-            }
-
-            // find the answer criteria
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < m; j++)
-                {
-                    int value = arr[i, j];
-                    if (value % 2 == 1) count++;
-                }
-            }
-
             return count;
         }
 
@@ -236,25 +213,6 @@ namespace Algorithms
             } while (num != 0);
             if (s == '-') sb.Insert(0, s);
             return sb.ToString();
-        }
-
-        // returns the index of found value
-        public static int BinarySearchDisplay(int[] arr, int value)
-        {
-            int low = 0;
-            int high = arr.Length - 1;
-
-            while (low <= high)
-            {
-                int mid = (low + high) / 2;
-                if (arr[mid] == value)
-                    return mid;
-                else if (arr[mid] > value)
-                    high = mid - 1;
-                else
-                    low = mid + 1;
-            }
-            return -1;
         }
 
         static string LongestPalindromicSubstr(string s)
@@ -373,54 +331,6 @@ namespace Algorithms
                     return false;
             }
 
-
-            // AMAZON Demo 2
-            //public int generalizedGCD(int num, int[] arr)
-            //{
-            //    return arr.Aggregate(Gcd);
-            //}
-
-
-
-            //public static int Gcd(int a, int b)
-            //{
-            //    while (a != 0 && b != 0)
-            //    {
-            //        if (a > b)
-            //            a %= b;
-            //        else
-            //            b %= a;
-            //    }
-
-            //    return a == 0 ? b : a;
-            //}
-
-
-            // Amazon Demo 1
-            //public static int[] cellCompete(int[] states, int days)
-            //{
-            //    int[] temp = new int[states.Length];
-
-            //    for (int i = 0; i < days; i++)
-            //    {
-            //        for (int j = 0; j < states.Length; j++)
-            //        {
-            //            if (j == 0)
-            //                temp[j] = states[j + 1];
-            //            else if (j == states.Length - 1)
-            //                temp[j] = states[j - 1];
-            //            else
-            //            {
-            //                if (states[j - 1] != states[j + 1])
-            //                    temp[j] = 1;
-            //                else
-            //                    temp[j] = 0;
-            //            }
-            //        }
-            //        Array.Copy(temp, states, states.Length);
-            //    }
-            //    return states;
-            //}
         }
 
         static int MaxSubArraySum(int[] a)
@@ -470,24 +380,20 @@ namespace Algorithms
 
         static void PrintDivisors(int n)
         {
-
             // Note that this loop runs  
             // till square root 
-            for (int i = 1; i <= Math.Sqrt(n);
-                                          i++)
+            for (int i = 1; i <= Math.Sqrt(n); i++)
             {
                 if (n % i == 0)
                 {
-
                     // If divisors are equal, 
                     // print only one 
                     if (n / i == i)
                         Console.Write(i + " ");
 
-                    // Otherwise print both 
+                    // Otherwise print both
                     else
-                        Console.Write(i + " "
-                                + n / i + " ");
+                        Console.Write(i + " " + n / i + " ");
                 }
             }
         }
@@ -537,7 +443,6 @@ namespace Algorithms
             }
             return result.ToArray();
         }
-
 
         static List<int> RotationsOfNumber(int num)
         {
@@ -611,43 +516,6 @@ namespace Algorithms
             return (ch1 == '(' && ch2 == ')') || (ch1 == '{' && ch2 == '}') || (ch1 == '[' && ch2 == ']');
         }
 
-        static List<List<string>> AllSubsets(string[] set)
-        {
-            uint pow_set_size = (uint)Math.Pow(2, set.Length);
-            int j;
-            List<List<string>> result = new List<List<string>>();
-            for (int i = 0; i < pow_set_size; i++)
-            {
-                List<string> list = new List<string>();
-
-                for (j = 0; j < set.Length; j++)
-                {
-                    if ((i & (1 << j)) > 0)
-                        list.Add(set[j]);
-                    else if (i == 0 && j == 0)
-                        list.Add("{}");
-                }
-                result.Add(list);
-            }
-            return result;
-        }
-
-        // used in to find an element in a sorted array
-        static int BinarySearch(int[] arr, int l, int r, int x)
-        {
-            if (r >= l)
-            {
-                int mid = l + (r - l) / 2;
-                if (arr[mid] == x)
-                    return mid;
-                if (arr[mid] > x)
-                    return BinarySearch(arr, l, mid - 1, x);
-                return BinarySearch(arr, mid + 1, r, x);
-            }
-
-            return -1;
-        }
-
         public static bool IsPrime(int n)
         {
             // Corner cases
@@ -707,25 +575,6 @@ namespace Algorithms
             return arr;
         }
 
-        static string RemoveDupsFromSortedStr(char[] arr)
-        {
-            int res_ind = 1, ip_ind = 1;
-
-            while (ip_ind != arr.Length)
-            {
-                if (arr[ip_ind] != arr[ip_ind - 1])
-                {
-                    arr[res_ind] = arr[ip_ind];
-                    res_ind++;
-                }
-                ip_ind++;
-
-            }
-
-            string str = new String(arr);
-            return str.Substring(0, res_ind);
-        }
-
         // gets the most occurring char from string
         public static char MaxCharInStr(string str)
         {
@@ -746,32 +595,6 @@ namespace Algorithms
             }
 
             return result;
-        }
-
-        public static int LongestCommonSubStrCount(string str1, string str2)
-        {
-            int max = 0;
-
-            int[,] dp = new int[str1.Length, str2.Length];
-
-            for (int i = 0; i < str1.Length; i++)
-            {
-                for (int j = 0; j < str2.Length; j++)
-                {
-                    if (str1[i] == str2[j])
-                    {
-                        if (i == 0 || j == 0)
-                            dp[i, j] = 1;
-                        else
-                            dp[i, j] = dp[i - 1, j - 1] + 1;
-
-                        if (max < dp[i, j])
-                            max = dp[i, j];
-                    }
-                }
-            }
-
-            return max;
         }
 
         //check for a pair of numbers in A[] with sum as x
@@ -811,53 +634,6 @@ namespace Algorithms
             //    Console.WriteLine(arr[k]);
 
             return j;
-        }
-
-        // find missing min positive num in given array
-        static int FindMissing(int[] arr, int size)
-        {
-
-            int shift = SplitArray(arr, size);
-            int[] arr2 = new int[size - shift];
-            int j = 0;
-
-            for (int i = shift; i < size; i++)
-            {
-                arr2[j] = arr[i];
-                j++;
-            }
-
-            // Shift the array and call 
-            // findMissingPositive for
-            // positive part
-            return FindMissingPositive(arr2, j);
-        }
-
-        static int FindMissingPositive(int[] arr, int size)
-        {
-            int i;
-
-            // Mark arr[i] as visited by making 
-            // arr[arr[i] - 1] negative. Note that 
-            // 1 is subtracted as index start from
-            // 0 and positive numbers start from 1
-            for (i = 0; i < size; i++)
-            {
-                int val = Math.Abs(arr[i]);
-
-                if (val - 1 < size && arr[val - 1] > 0)
-                    arr[val - 1] = -arr[val - 1];
-            }
-
-            // Return the first index value at 
-            // which is positive
-            for (i = 0; i < size; i++)
-                if (arr[i] > 0)
-                    return i + 1;
-
-            // 1 is added becuase indexes 
-            // start from 0
-            return size + 1;
         }
 
         // shifts array elements to left by d
@@ -940,7 +716,8 @@ namespace Algorithms
                     return lcm_of_array_elements;
             }
         }
-        // string rotate
+        
+        // string rotation
         static string ShiftLeft(string s, int count)
         {
             return s.Remove(0, count) + s.Substring(0, count);
@@ -951,16 +728,7 @@ namespace Algorithms
             return s.Remove(0, s.Length - count) + s.Substring(0, s.Length - count);
         }
 
-
-        static Dictionary<int, long> fact = new Dictionary<int, long>() {
-        { 1, 1 }, { 2, 2 }, { 3, 6 }, { 4, 24 },{ 5, 120 },
-        { 6, 720 }, { 7, 5040 }, { 8, 40320 },
-        { 9, 362880 }, { 10,3628800}, { 11,39916800},{12,479001600 },
-        { 13, 6227020800},{14, 87178291200},{15,1307674368000 },
-        { 16, 20922789888000},{ 17, 355687428096000},{18,6402373705728000 },
-        { 19, 121645100408832000},{20,2432902008176640000 } };
-
-        static long factorial(int num)
+        static long Factorial(int num)
         {
             if (num == 1) return 1;
             long res = num;
@@ -989,34 +757,6 @@ namespace Algorithms
             }
         }
 
-        // all permutations of string
-        static readonly List<string> strlist = new List<string>();
-        static void PermuteStr(string str, int l, int r)
-        {
-            if (l == r)
-                strlist.Add(str);
-            else
-            {
-                for (int i = l; i <= r; i++)
-                {
-                    str = StrSwap(str, l, i);
-                    PermuteStr(str, l + 1, r);
-                    str = StrSwap(str, l, i);
-                }
-            }
-        }
-
-        public static string StrSwap(string a, int i, int j)
-        {
-            char temp;
-            char[] charArray = a.ToCharArray();
-            temp = charArray[i];
-            charArray[i] = charArray[j];
-            charArray[j] = temp;
-            return String.Join("", charArray);
-        }
-
-
         private static void Swap<T>(T[] values, int pos1, int pos2)
         {
             if (pos1 != pos2)
@@ -1027,31 +767,23 @@ namespace Algorithms
             }
         }
 
-        #region LinkedList Methods
-
-        public class Node
-        {
-            public int data;
-            public Node next;
-            public Node(int d)
-            {
-                data = d;
-                next = null;
-            }
-        }
-
-        public static Node head;
-
-        static void PrintLinkedList()
-        {
-            Node temp = head;
-            while (temp != null)
-            {
-                Console.WriteLine(temp.data + " ");
-                temp = temp.next;
-            }
-        }
-
-        #endregion
     }
+
+    // Largest Number formed from an Array:             
+    // arrange them in such a manner that they form the largest number possible 
+    // usage:
+    //IComparer myComparer = new MyClass();
+    //Array.Sort(arr, myComparer);
+    public class MyClass : IComparer
+    {
+        public int Compare(object x, object y)
+        {
+            string XY = x.ToString() + y.ToString();
+            string YX = y.ToString() + x.ToString();
+
+            // YX and XY are reversly compared
+            return string.Compare(YX, XY);
+        }
+    }
+
 }
