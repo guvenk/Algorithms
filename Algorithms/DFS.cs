@@ -34,10 +34,10 @@ namespace Algorithms
 
             // Recur for all the vertices  
             // adjacent to this vertex  
-            List<int> vList = neighbours[v];
-            foreach (var n in vList)
-                if (!visited[n])
-                    DFS(n, visited);
+            List<int> neighbourList = neighbours[v];
+            foreach (var neighbour in neighbourList)
+                if (!visited[neighbour])
+                    DFS(neighbour, visited);
         }
 
         // Driver Code 
@@ -62,4 +62,42 @@ namespace Algorithms
             Console.ReadKey();
         }
     }
+
+    class SimplisticImplementationDFS
+    {
+        private readonly bool[][] visited;
+
+        public SimplisticImplementationDFS(int size)
+        {
+            visited = new bool[size][];
+        }
+
+        void IsIsland(int i, int j)
+        {
+            visited[i][j] = true;
+
+            var neighbours = GetNeighbours(i, j);
+            foreach (var (I, J) in neighbours)
+                if (!visited[I][J])
+                    IsIsland(I, J);
+        }
+
+        private List<(int I, int J)> GetNeighbours(int i, int j)
+        {
+            var list = new List<(int I, int J)>();
+            if (i != 0)
+                list.Add((i - 1, j));
+
+            if (i != visited.Length)
+                list.Add((i + 1, j));
+
+            if (j != 0)
+                list.Add((i, j - 1));
+
+            if (j != visited.Length)
+                list.Add((i, j + 1));
+
+            return list;
+        }
+    }        
 }
