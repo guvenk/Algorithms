@@ -527,11 +527,21 @@ namespace Algorithms
             // in below loop
             if (n % 2 == 0 || n % 3 == 0) return false;
 
-            for (int i = 5; i * i <= n; i = i + 6)
+            for (int i = 5; i * i <= n; i += 6)
                 if (n % i == 0 || n % (i + 2) == 0)
                     return false;
 
             return true;
+        }
+
+        public static List<int> GetPrimes(int from, int until)
+        {
+            var list = new List<int>();
+            for (int i = from; i <= until; i++)
+                if (IsPrime(i))
+                    list.Add(i);
+
+            return list;
         }
 
         // Function to Rearrange positive and negative numbers in a array
@@ -716,7 +726,7 @@ namespace Algorithms
                     return lcm_of_array_elements;
             }
         }
-        
+
         // string rotation
         static string ShiftLeft(string s, int count)
         {

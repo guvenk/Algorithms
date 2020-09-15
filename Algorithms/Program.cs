@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 
 namespace Algorithms
 {
@@ -11,10 +10,12 @@ namespace Algorithms
     {
         public static void Main(string[] args)
         {
+            var list = Helper.GetPrimes(5, 19);
             
+            Console.WriteLine(string.Concat(string.Join(' ', list)));
             Console.ReadKey();
         }
-       
+
 
     }
 }
