@@ -10,12 +10,11 @@ namespace Algorithms
     {
         public static void Main(string[] args)
         {
-            var list = Helper.GetPrimes(5, 19);
+            var list = Helper.NumToBase(12, 5);
             
-            Console.WriteLine(string.Concat(string.Join(' ', list)));
+            Console.WriteLine(list);
             Console.ReadKey();
         }
-
 
     }
 }
