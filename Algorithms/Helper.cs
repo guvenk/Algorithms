@@ -8,32 +8,10 @@ namespace Algorithms
 {
     public class Helper
     {
-        public static string CompressString(string str)
+        static int NumOfSquares(int l, int w)
         {
-            StringBuilder sb = new StringBuilder();
-            int count = 1;
-            char prev = str[0];
-            for (int i = 1; i < str.Length; i++)
-            {
-                char curr = str[i];
-                if (prev == curr)
-                    count++;
-                else
-                {
-                    if (count != 1)
-                        sb.Append(count);
-                    sb.Append(prev);
-                    prev = curr;
-                    count = 1;
-                }
-            }
-            if (count != 1)
-                sb.Append(count);
-            sb.Append(prev);
-            if (str.Length < sb.Length)
-                return str;
-            else
-                return sb.ToString();
+            int squareSide = Gcd(l, w);
+            return (l * w) / (squareSide * squareSide);
         }
 
         public static bool AreStringsEqual(string a, string b)
@@ -707,7 +685,7 @@ namespace Algorithms
             return result;
         }
 
-        // Least Common Multiple: int lsm = num1 * num2 / GCD(num1,num2)
+        // Least Common Multiple: int lsm = num1 * num2 / Gcd(num1,num2);
         public static int Gcd(int a, int b)
         {
             while (a != 0 && b != 0)
