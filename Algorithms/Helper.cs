@@ -14,148 +14,6 @@ namespace Algorithms
             return (l * w) / (squareSide * squareSide);
         }
 
-        public static bool AreStringsEqual(string a, string b)
-        {
-            a = ReplaceNumbersWithDotsInString(a);
-            b = ReplaceNumbersWithDotsInString(b);
-
-            if (a.Length != b.Length)
-                return false;
-            for (int i = 0; i < a.Length; i++)
-            {
-                if (a[i] == '.' || b[i] == '.')
-                    continue;
-
-                if (a[i] != b[i])
-                    return false;
-            }
-
-            return true;
-        }
-
-        static string ReplaceNumbersWithDotsInString(string str)
-        {
-            string temp = string.Empty;
-
-            for (int i = 0; i < str.Length; i++)
-            {
-                char ch = str[i];
-
-                if (char.IsDigit(ch))
-                {
-                    temp += ch;
-                }
-                else if (!string.IsNullOrEmpty(temp))
-                {
-                    int idx = str.IndexOf(temp);
-                    str = str.Remove(idx, temp.Length);
-                    string value = new string('.', int.Parse(temp));
-                    str = str.Insert(idx, value);
-                    temp = string.Empty;
-                }
-                if (i == str.Length - 1 && !string.IsNullOrEmpty(temp))
-                {
-                    int idx = str.IndexOf(temp);
-                    str = str.Remove(idx, temp.Length);
-                    string value = new string('.', int.Parse(temp));
-                    str = str.Insert(idx, value);
-                    temp = string.Empty;
-                }
-            }
-
-            return str;
-        }
-
-        // USAGE
-        //int[,] grid = new int[4, 8] {
-        //        { 0, 1, 1, 0, 1 ,0, 0, 0},
-        //        { 0, 1, 0, 1, 0 ,0, 0, 0},
-        //        { 0, 0, 0, 0, 0 ,0, 0, 0},
-        //        { 0, 1, 0, 0, 0 ,0, 0, 0}};
-        //var result2 = MinHoursGuven(4, 8, grid);
-        //Console.WriteLine(result2);
-        // distance to reach the furthest "0" from "1"
-        static int FindFurthestDistanceInGrid(int rows, int cols, int[,] grid)
-        {
-            UpdateMatrix(rows, cols, grid);
-            int max = 0;
-            for (int i = 0; i < rows; i++)
-                for (int j = 0; j < cols; j++)
-                    if (grid[i, j] > max)
-                        max = grid[i, j];
-
-            return max;
-        }
-
-        public static int[,] UpdateMatrix(int rows, int cols, int[,] matrix)
-        {
-            Queue<(int, int)> queue = new Queue<(int, int)>();
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    if (matrix[i, j] == 1)
-                    {
-                        queue.Enqueue((i, j));
-                        matrix[i, j] = 0;
-                    }
-                    else
-                        matrix[i, j] = int.MaxValue;
-                }
-            }
-
-            int[,] direction = new int[4, 2]
-            {
-                { -1, 0 /* up */ },
-                { 0, 1 /* right */ },
-                { 1, 0 /* down */ },
-                { 0, -1 } /* left */
-            };
-
-            while (queue.Count != 0)
-            {
-                (int Row, int Col) curr = queue.Dequeue();
-
-                for (int i = 0; i < 4; i++)
-                {
-                    int row = curr.Row + direction[i, 0];
-                    int col = curr.Col + direction[i, 1];
-
-                    if (row >= 0 && row < rows && col >= 0 && col < cols
-                        && matrix[row, col] > matrix[curr.Row, curr.Col] + 1)
-                    {
-                        matrix[row, col] = matrix[curr.Row, curr.Col] + 1;
-                        queue.Enqueue((row, col));
-                    }
-                }
-            }
-            return matrix;
-        }
-
-        public static int LongestPalindromeCount(string s)
-        {
-            int[] arr = new int[58];
-            int count = 0;
-            for (int i = 0; i < s.Length; i++)
-                arr[s[i] - 65]++;
-
-            for (int i = 0; i < 58; i++)
-            {
-                if (arr[i] > 0)
-                {
-                    if (arr[i] % 2 == 0)
-                        count += arr[i];
-                    else
-                        count += arr[i] - 1;
-                }
-            }
-
-            if (count < s.Length)
-                count++;
-            return count;
-        }
-
         public string MostCommonWord(string paragraph, string[] banned)
         {
             // usage
@@ -180,136 +38,6 @@ namespace Algorithms
             return dict.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
         }
 
-        public static string ConvertToBase7(int num)
-        {
-            var sb = new StringBuilder();
-            char s = num < 0 ? '-' : '+';
-            do
-            {
-                sb.Insert(0, Math.Abs(num % 7));
-                num /= 7;
-            } while (num != 0);
-            if (s == '-') sb.Insert(0, s);
-            return sb.ToString();
-        }
-
-        static string LongestPalindromicSubstr(string s)
-        {
-            int max = 1;
-            string pal = string.Empty;
-            if (s.Length == 1)
-                pal = s;
-            for (int i = 0; i < s.Length; i++)
-            {
-                int j = i - 1, k = i + 1;
-                int maxCurrent = 1;
-                while (j > -1 && k < s.Length && s[j] == s[k])
-                {
-                    maxCurrent += 2;
-                    j--;
-                    k++;
-                }
-                if (maxCurrent > max)
-                {
-                    max = maxCurrent;
-                    pal = s.Substring(j + 1, maxCurrent);
-                }
-                // for even counts
-                j = i - 1;
-                k = i;
-                maxCurrent = 0;
-                while (j > -1 && k < s.Length && s[j] == s[k])
-                {
-                    maxCurrent += 2;
-                    j--;
-                    k++;
-                }
-                if (maxCurrent > max)
-                {
-                    max = maxCurrent;
-                    pal = s.Substring(j + 1, maxCurrent);
-                }
-            }
-
-            return pal;
-        }
-
-        public static string LongestPalindrome(string s)
-        {
-            int maxLength = 0;
-            int maxStart = 0;
-
-            void CheckPalindrome(int left, int right)
-            {
-                while (left >= 0 && right < s.Length)
-                {
-                    if (s[left] != s[right])
-                        break;
-
-                    int length = right - left + 1;
-                    if (length > maxLength)
-                    {
-                        maxLength = length;
-                        maxStart = left;
-                    }
-                    left--;
-                    right++;
-                }
-            }
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                CheckPalindrome(i, i);
-                CheckPalindrome(i, i + 1);
-            }
-
-            return s.Substring(maxStart, maxLength);
-        }
-
-        public static string FindLongestWordInDictionary(string s, List<string> dictionary)
-        {
-            //USAGE
-            //List<string> dictionary = new List<string>() { "ale", "apple", "monkey", "plea" };
-
-            //string res = FindLongestWord("abpcplea", dictionary);
-
-            string result = "";
-
-            foreach (string str in dictionary)
-            {
-                if (Check(s, str))
-                {
-                    if (result.Length < str.Length)
-                        result = str;
-                    else if (result.Length == str.Length)
-                        if (result.CompareTo(str) > 0)
-                            result = str;
-                }
-            }
-
-            return result;
-
-            bool Check(string str, string word)
-            {
-                int i = 0, j = 0;
-
-                while (i < str.Length && j < word.Length)
-                {
-                    if (word[j] == str[i])
-                    {
-                        ++i;
-                        ++j;
-                    }
-                    else
-                        ++i;
-                }
-                if (j == word.Length)
-                    return true;
-                else
-                    return false;
-            }
-
-        }
 
         static int MaxSubArraySum(int[] a)
         {
@@ -320,7 +48,7 @@ namespace Algorithms
 
             for (int i = 0; i < size; i++)
             {
-                max_ending_here = max_ending_here + a[i];
+                max_ending_here += a[i];
 
                 if (max_so_far < max_ending_here)
                     max_so_far = max_ending_here;
@@ -332,48 +60,23 @@ namespace Algorithms
             return max_so_far;
         }
 
-        public static void MergeSortedTwoArrays(int[] nums1, int m, int[] nums2, int n)
+        static List<int> GetDivisors(int n)
         {
-            // USAGE
-            // var a = new int[] { 1, 2, 3, 0, 0, 0 };
-            //var b = new int[] { 2, 5, 6 };
-            //Merge(a, 3, b, 3);
-            while (n + m > 0)
-            {
-                if (n == 0)
-                    break;
+            var list = new List<int>();
 
-                if (m != 0 && nums1[m - 1] > nums2[n - 1])
-                {
-                    nums1[n + m - 1] = nums1[m - 1];
-                    m--;
-                }
-                else
-                {
-                    nums1[n + m - 1] = nums2[n - 1];
-                    n--;
-                }
-            }
-        }
-
-        static void PrintDivisors(int n)
-        {
-            // Note that this loop runs  
-            // till square root 
             for (int i = 1; i <= Math.Sqrt(n); i++)
             {
                 if (n % i == 0)
                 {
-                    // If divisors are equal, 
-                    // print only one 
+                    // If divisors are equal, get one 
                     if (n / i == i)
-                        Console.Write(i + " ");
-
-                    // Otherwise print both
+                        list.Add(i);
+                    // Otherwise  both
                     else
-                        Console.Write(i + " " + n / i + " ");
+                        list.AddRange(new int[] { i, n / i });
                 }
             }
+            return list;
         }
 
         public static int[][] Merge_Intervals(int[][] intervals)
@@ -454,46 +157,17 @@ namespace Algorithms
 
         public static double ToRadians(double angleIn10thofaDegree) => (angleIn10thofaDegree * Math.PI) / 1800;
 
-        class Point
+        public class Point
         {
             public int X { get; set; }
             public int Y { get; set; }
         }
 
-        public static double Median(int[] ar)
+        public static double MedianOfArray(int[] ar)
         {
             int n = ar.Length;
             double median = (ar[n / 2] + ar[(n - 1) / 2]) / 2.0;
             return median;
-        }
-
-        static bool AreParenthesisBalanced(char[] exp)
-        {
-            Stack st = new Stack();
-
-            for (int i = 0; i < exp.Length; i++)
-            {
-                if (exp[i] == '{' || exp[i] == '(' || exp[i] == '[')
-                    st.Push(exp[i]);
-
-                if (exp[i] == '}' || exp[i] == ')' || exp[i] == ']')
-                {
-                    if (st.Count < 1)
-                        return false;
-                    else if (!IsMatchingPair((char)st.Pop(), exp[i]))
-                        return false;
-                }
-            }
-
-            if (st.Count < 1)
-                return true;
-            else
-                return false;
-        }
-
-        static bool IsMatchingPair(char ch1, char ch2)
-        {
-            return (ch1 == '(' && ch2 == ')') || (ch1 == '{' && ch2 == '}') || (ch1 == '[' && ch2 == ']');
         }
 
         public static bool IsPrime(int n)
@@ -520,12 +194,12 @@ namespace Algorithms
             return list;
         }
 
-        public static string NumToBase(long number, int radix)
+        public static string NumToBase(long number, int toBase)
         {
             const int BitsInLong = 64;
             const string Digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-            if (radix < 2 || radix > Digits.Length)
+            if (toBase < 2 || toBase > Digits.Length)
                 throw new ArgumentException("The radix must be >= 2 and <= " + Digits.Length.ToString());
 
             if (number == 0)
@@ -537,9 +211,9 @@ namespace Algorithms
 
             while (currentNumber != 0)
             {
-                int remainder = (int)(currentNumber % radix);
+                int remainder = (int)(currentNumber % toBase);
                 charArray[index--] = Digits[remainder];
-                currentNumber = currentNumber / radix;
+                currentNumber = currentNumber / toBase;
             }
 
             string result = new string(charArray, index + 1, BitsInLong - index - 1);
@@ -549,34 +223,6 @@ namespace Algorithms
             }
 
             return result;
-        }
-
-        // Function to Rearrange positive and negative numbers in a array
-        static void RearrangePosNeg(int[] arr)
-        {
-            int key, j;
-            for (int i = 1; i < arr.Length; i++)
-            {
-                key = arr[i];
-
-                // if current element is positive
-                // do nothing
-                if (key > 0)
-                    continue;
-
-                /* if current element is negative,
-                shift positive elements of arr[0..i-1],
-                to one position to their right */
-                j = i - 1;
-                while (j >= 0 && arr[j] > 0)
-                {
-                    arr[j + 1] = arr[j];
-                    j = j - 1;
-                }
-
-                // Put negative element at its right position
-                arr[j + 1] = key;
-            }
         }
 
         static int[] PushZerosToEndOfArray(int[] arr)
@@ -590,28 +236,6 @@ namespace Algorithms
                 arr[count++] = 0;
 
             return arr;
-        }
-
-        // gets the most occurring char from string
-        public static char MaxCharInStr(string str)
-        {
-            int[] count = new int[256];
-
-            for (int i = 0; i < str.Length; i++)
-                count[str[i]]++;
-
-            int max = -1; // Initialize max count
-            char result = ' ';
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (max < count[str[i]])
-                {
-                    max = count[str[i]];
-                    result = str[i];
-                }
-            }
-
-            return result;
         }
 
         //check for a pair of numbers in A[] with sum as x
@@ -629,28 +253,6 @@ namespace Algorithms
                 }
                 s.Add(arr[i]);
             }
-        }
-
-        // brings negative values to left in the array
-        static int SplitArray(int[] arr, int size)
-        {
-            int j = 0, i;
-            for (i = 0; i < size; i++)
-            {
-                if (arr[i] <= 0)
-                {
-                    int temp;
-                    temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                    j++;
-                }
-            }
-
-            //for (int k = 0; k < arr.Length; k++)
-            //    Console.WriteLine(arr[k]);
-
-            return j;
         }
 
         // shifts array elements to left by d
@@ -734,47 +336,32 @@ namespace Algorithms
             }
         }
 
-        // string rotation
-        static string ShiftLeft(string s, int count)
-        {
-            return s.Remove(0, count) + s.Substring(0, count);
-        }
 
-        static string ShiftRight(string s, int count)
-        {
-            return s.Remove(0, s.Length - count) + s.Substring(0, s.Length - count);
-        }
-
-        static long Factorial(int num)
-        {
-            if (num == 1) return 1;
-            long res = num;
-            for (int i = 1; i < num; i++)
-                res *= i;
-            return res;
-        }
-
-        //simple Permutation method
+        //Simple Permutation method
         public static IEnumerable<T[]> Permutations<T>(T[] values, int fromInd = 0)
         {
+            var list = new List<T[]>();
+
             if (fromInd + 1 == values.Length)
-                yield return values;
+                list.Add(values);
             else
             {
                 foreach (var v in Permutations(values, fromInd + 1))
-                    yield return v;
+                    list.Add(v);
 
                 for (var i = fromInd + 1; i < values.Length; i++)
                 {
                     Swap(values, fromInd, i);
                     foreach (var v in Permutations(values, fromInd + 1))
-                        yield return v;
+                        list.Add(v);
                     Swap(values, fromInd, i);
                 }
             }
+
+            return list;
         }
 
-        private static void Swap<T>(T[] values, int pos1, int pos2)
+        public static void Swap<T>(T[] values, int pos1, int pos2)
         {
             if (pos1 != pos2)
             {
