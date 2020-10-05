@@ -1,10 +1,25 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 
 namespace Algorithms
 {
     public class Matrix
     {
+        public static void PrintMatrix(int[,] matrix)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Console.Write(matrix[i, j]);
+                    if (j != matrix.GetLength(1) - 1)
+                        Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+
         public static int[,] Transpose(int[,] arr)
         {
             int rows = arr.GetLength(0);
