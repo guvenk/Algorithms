@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Algorithms
 {
-    public partial class Helper
+    public class Helper
     {
         static int NumOfSquares(int l, int w)
         {
