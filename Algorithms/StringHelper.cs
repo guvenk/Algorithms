@@ -221,5 +221,32 @@ namespace Algorithms
             }
 
         }
+
+        public static string LongestRepeatedSubstring(string s)
+        {
+            var suffixes = new string[s.Length];
+            for (int i = 0; i < s.Length; i++)
+                suffixes[i] = s[i..];
+
+            Array.Sort(suffixes);
+
+            string lrs = string.Empty;
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                string x = LongestCommonPrefix(suffixes[i], suffixes[i + 1]);
+                if (x.Length > lrs.Length)
+                    lrs = x;
+            }
+            return lrs;
+        }
+
+        public static string LongestCommonPrefix(string s, string t)
+        {
+            int n = Math.Min(s.Length, t.Length);
+            for (int i = 0; i < n; i++)
+                if (s[i] != t[i])
+                    return s[0..i];
+            return s[0..n];
+        }
     }
 }
