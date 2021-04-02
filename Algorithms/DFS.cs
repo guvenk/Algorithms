@@ -65,39 +65,34 @@ namespace Algorithms
 
     public class SimpleDFS
     {
-        private readonly bool[,] visited;
-        private readonly int[,] matrix;
-        private readonly int size = 0;
-
-        public SimpleDFS(int matrixSize, int[,] arr)
+        public SimpleDFS(int[,] arr)
         {
-            size = matrixSize;
-            visited = new bool[size, size];
-            matrix = arr;
+
         }
-        //USAGE
-        //int[,] matrix = new int[,]
-        //{
-        //    { 1,0,0,1 },
-        //    { 0,0,1,1 },
-        //    { 0,0,0,0 },
-        //    { 1,0,1,1 },
-        //};
+        void Usage()
+        {
+            char[][] grid = new char[][]
+            {
+                new char [] { '1','0','0','1' },
+                new char [] { '0','0','1','1' },
+                new char [] { '0','0','0','0' },
+                new char [] { '1','0','1','1' },
+            };
+            var result = SimpleDFS.NumOfIslands(grid);
+            Console.WriteLine(result);
+        }
 
-        //SimpleDFS test = new SimpleDFS(4, matrix);
-        //var result = test.NumOfIslands();
-        //Console.WriteLine(result);
-
-        public int NumOfIslands()
+        public static int NumOfIslands(char[][] grid)
         {
             int count = 0;
-            for (int row = 0; row < size; row++)
+
+            for (int row = 0; row < grid.Length; row++)
             {
-                for (int col = 0; col < size; col++)
+                for (int col = 0; col < grid[row].Length; col++)
                 {
-                    if (!visited[row, col] && matrix[row, col] == 1)
+                    if (grid[row][col] == '1')
                     {
-                        DFS(row, col);
+                        DFS(grid, row, col);
                         count++;
                     }
                 }
@@ -106,33 +101,22 @@ namespace Algorithms
             return count;
         }
 
-        private void DFS(int row, int col)
+        private static void DFS(char[][] grid, int row, int col)
         {
-            visited[row, col] = true;
+            if (row < 0 || row == grid.Length
+                || col < 0 || col == grid[row].Length
+                || grid[row][col] == '0')
+            {
+                return;
+            }
+            grid[row][col] = '0';
 
-            var neighbours = GetNeighbours(row, col);
-            foreach (var (I, J) in neighbours)
-                if (!visited[I, J])
-                    DFS(I, J);
+
+            DFS(grid, row + 1, col);
+            DFS(grid, row - 1, col);
+            DFS(grid, row, col + 1);
+            DFS(grid, row, col - 1);
         }
 
-        private List<(int I, int J)> GetNeighbours(int i, int j)
-        {
-            var list = new List<(int I, int J)>();
-            // if its inside matrix, not visited and equal to 1
-            if (i > 0 && !visited[i - 1, j] && matrix[i - 1, j] == 1)
-                list.Add((i - 1, j));
-
-            if (i < size - 1 && !visited[i + 1, j] && matrix[i + 1, j] == 1)
-                list.Add((i + 1, j));
-
-            if (j > 0 && !visited[i, j - 1] && matrix[i, j - 1] == 1)
-                list.Add((i, j - 1));
-
-            if (j < size - 1 && !visited[i, j + 1] && matrix[i, j + 1] == 1)
-                list.Add((i, j + 1));
-
-            return list;
-        }
     }
 }
