@@ -8,7 +8,8 @@ namespace Algorithms
     {
         // Time Complexity: O(n^2) in worst case. For a skewed tree, printGivenLevel() takes O(n) time where n is the number of nodes in the skewed tree.So time complexity of printLevelOrder() is O(n) + O(n-1) + O(n-2) + .. + O(1) which is O(n^2). 
         // Space Complexity: O(n) in worst case. 
-        public void PrintLevelOrder(Node root)
+        public Node root;
+        public void PrintLevelOrder()
         {
             int rootHeight = GetHeight(root);
 
