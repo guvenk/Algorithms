@@ -18,9 +18,9 @@ namespace Algorithms
 
         public void BFS(int num)
         {
-            HashSet<int> visited = new HashSet<int>();
+            HashSet<int> visited = new HashSet<int> { num };
+
             Queue<int> queue = new Queue<int>();
-            visited.Add(num);
             queue.Enqueue(num);
 
             while (queue.Count != 0)
@@ -28,6 +28,7 @@ namespace Algorithms
                 num = queue.Dequeue();
                 Console.Write(num + " ");
 
+                // check if it has neighbours
                 if (neighbours.Keys.Contains(num))
                 {
                     List<int> neighbors = neighbours[num];

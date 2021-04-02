@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using Algorithms;
-using System.Text.RegularExpressions;
 
-class Solution
+namespace Algorithms
 {
-    static void Main()
+    class Solution
     {
+        static void Main()
+        {
+            int[,] matrix = new int[,]
+            {
+                { 1,0,0,1 },
+                { 0,0,1,1 },
+                { 0,0,0,0 },
+                { 1,0,1,1 },
+            };
+
+            SimpleDFS test = new SimpleDFS(4, matrix);
+            var result = test.NumOfIslands();
+            Console.WriteLine(result);
 
 
-
-        Console.ReadKey();
+            Console.ReadKey();
+        }
     }
-
-
-
-
 }

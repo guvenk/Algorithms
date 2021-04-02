@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Algorithms
 {
-    class StringHelper
+    public class StringHelper
     {
         /// <summary>
         /// Returns the number of steps required to transform the source string
@@ -247,6 +247,68 @@ namespace Algorithms
                 if (s[i] != t[i])
                     return s[0..i];
             return s[0..n];
+        }
+
+        public static string LookAndSay(string x)
+        {
+            string result = string.Empty;
+            string t = x.ToString();
+            int numberCount = 0;
+            char number = t[0];
+            for (int i = 0; i < t.Length; i++)
+            {
+                if (number == t[i])
+                    numberCount++;
+                else
+                {
+                    result += numberCount.ToString() + number;
+                    number = t[i];
+                    numberCount = 1;
+                }
+            }
+            result += numberCount.ToString() + number;
+
+            return result;
+        }
+
+
+        static string LCSubStr(string X, string Y)
+        {
+            int[,] LCSuff = new int[X.Length + 1, Y.Length + 1];
+            int len = 0;
+            int row = 0, col = 0;
+            for (int i = 0; i <= X.Length; i++)
+            {
+                for (int j = 0; j <= Y.Length; j++)
+                {
+                    if (i == 0 || j == 0)
+                        LCSuff[i, j] = 0;
+                    else if (X[i - 1] == Y[j - 1])
+                    {
+                        LCSuff[i, j] = LCSuff[i - 1, j - 1] + 1;
+                        if (len < LCSuff[i, j])
+                        {
+                            len = LCSuff[i, j];
+                            row = i;
+                            col = j;
+                        }
+                    }
+                    else
+                        LCSuff[i, j] = 0;
+                }
+            }
+            if (len == 0)
+                return "NONE";
+
+            string resultStr = "";
+            while (LCSuff[row, col] != 0)
+            {
+                resultStr = X[row - 1] + resultStr;
+                --len;
+                row--;
+                col--;
+            }
+            return resultStr;
         }
     }
 }

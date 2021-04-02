@@ -63,41 +63,76 @@ namespace Algorithms
         }
     }
 
-    class SimplisticImplementationDFS
+    public class SimpleDFS
     {
-        private readonly bool[][] visited;
+        private readonly bool[,] visited;
+        private readonly int[,] matrix;
+        private readonly int size = 0;
 
-        public SimplisticImplementationDFS(int size)
+        public SimpleDFS(int matrixSize, int[,] arr)
         {
-            visited = new bool[size][];
+            size = matrixSize;
+            visited = new bool[size, size];
+            matrix = arr;
+        }
+        //USAGE
+        //int[,] matrix = new int[,]
+        //{
+        //    { 1,0,0,1 },
+        //    { 0,0,1,1 },
+        //    { 0,0,0,0 },
+        //    { 1,0,1,1 },
+        //};
+
+        //SimpleDFS test = new SimpleDFS(4, matrix);
+        //var result = test.NumOfIslands();
+        //Console.WriteLine(result);
+
+        public int NumOfIslands()
+        {
+            int count = 0;
+            for (int row = 0; row < size; row++)
+            {
+                for (int col = 0; col < size; col++)
+                {
+                    if (!visited[row, col] && matrix[row, col] == 1)
+                    {
+                        DFS(row, col);
+                        count++;
+                    }
+                }
+            }
+
+            return count;
         }
 
-        void IsIsland(int i, int j)
+        private void DFS(int row, int col)
         {
-            visited[i][j] = true;
+            visited[row, col] = true;
 
-            var neighbours = GetNeighbours(i, j);
+            var neighbours = GetNeighbours(row, col);
             foreach (var (I, J) in neighbours)
-                if (!visited[I][J])
-                    IsIsland(I, J);
+                if (!visited[I, J])
+                    DFS(I, J);
         }
 
         private List<(int I, int J)> GetNeighbours(int i, int j)
         {
             var list = new List<(int I, int J)>();
-            if (i != 0)
+            // if its inside matrix, not visited and equal to 1
+            if (i > 0 && !visited[i - 1, j] && matrix[i - 1, j] == 1)
                 list.Add((i - 1, j));
 
-            if (i != visited.Length)
+            if (i < size - 1 && !visited[i + 1, j] && matrix[i + 1, j] == 1)
                 list.Add((i + 1, j));
 
-            if (j != 0)
+            if (j > 0 && !visited[i, j - 1] && matrix[i, j - 1] == 1)
                 list.Add((i, j - 1));
 
-            if (j != visited.Length)
+            if (j < size - 1 && !visited[i, j + 1] && matrix[i, j + 1] == 1)
                 list.Add((i, j + 1));
 
             return list;
         }
-    }        
+    }
 }
