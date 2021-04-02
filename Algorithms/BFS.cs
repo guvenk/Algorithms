@@ -4,8 +4,54 @@ using System.Linq;
 
 namespace Algorithms
 {
+    public class BFS
+    {
+        // Time Complexity: O(n^2) in worst case. For a skewed tree, printGivenLevel() takes O(n) time where n is the number of nodes in the skewed tree.So time complexity of printLevelOrder() is O(n) + O(n-1) + O(n-2) + .. + O(1) which is O(n^2). 
+        // Space Complexity: O(n) in worst case. 
+        public void PrintLevelOrder(Node root)
+        {
+            int rootHeight = GetHeight(root);
+
+            for (int i = 1; i <= rootHeight; i++)
+                PrintGivenLevel(root, i);
+        }
+
+        public void PrintGivenLevel(Node root,
+                                           int level)
+        {
+            if (root == null)
+                return;
+            if (level == 1)
+                Console.Write(root.data + " ");
+            else if (level > 1)
+            {
+                PrintGivenLevel(root.left, level - 1);
+                PrintGivenLevel(root.right, level - 1);
+            }
+        }
+        public int GetHeight(Node root)
+        {
+            if (root == null)
+                return 0;
+            else
+            {
+                int lheight = GetHeight(root.left);
+                int rheight = GetHeight(root.right);
+
+                if (lheight > rheight)
+                    return (lheight + 1);
+                else
+                    return (rheight + 1);
+            }
+        }
+
+
+    }
     public class GraphBFS
     {
+        //Time Complexity: O(n) where n is number of nodes in the binary tree
+        //Space Complexity: O(n) where n is number of nodes in the binary tree
+
         public Dictionary<int, List<int>> neighbours = new Dictionary<int, List<int>>();
 
         public void AddEdge(int v, int w)
