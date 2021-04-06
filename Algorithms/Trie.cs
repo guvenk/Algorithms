@@ -69,7 +69,7 @@ namespace Algorithms
             return false;
         }
 
-        void use()
+        void USAGE()
         {
             Trie t = new Trie();
             t.CreateRoot();

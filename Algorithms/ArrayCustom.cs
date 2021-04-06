@@ -6,6 +6,15 @@ namespace Algorithms
 {
     public class ArrayCustom
     {
+        public void Reverse(char[] s, int left, int right)
+        {
+            while (left < right)
+            {
+                char tmp = s[left];
+                s[left++] = s[right];
+                s[right--] = tmp;
+            }
+        }
 
         static int[] PushZerosToEndOfArray(int[] arr)
         {
@@ -21,7 +30,7 @@ namespace Algorithms
         }
 
         //check for a pair of numbers in A[] with sum equal to x
-        static void GetPairs(int[] arr, int sum)
+        public static void TwoSum(int[] arr, int sum)
         {
             HashSet<int> s = new HashSet<int>();
             for (int i = 0; i < arr.Length; ++i)

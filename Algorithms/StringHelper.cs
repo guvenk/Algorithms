@@ -249,6 +249,7 @@ namespace Algorithms
             return s[0..n];
         }
 
+        // 1111 => 4 times 1 = > output: 41
         public static string LookAndSay(string x)
         {
             string result = string.Empty;

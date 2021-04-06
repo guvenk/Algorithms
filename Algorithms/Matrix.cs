@@ -19,17 +19,60 @@ namespace Algorithms
             }
         }
 
+        public static void Transpose(int[][] matrix)
+        {
+            for (int i = 0; i < matrix.Length; i++)
+                for (int j = i; j < matrix[i].Length; j++)
+                {
+                    int tmp = matrix[j][i];
+                    matrix[j][i] = matrix[i][j];
+                    matrix[i][j] = tmp;
+                }
+        }
 
-        public static int[,] Transpose(int[,] arr)
+        // Transpose + ReverseHorizontal = RotateRight
+        public static void ReverseHorizontal(int[][] arr)
+        {
+            int row = arr.Length;
+            int col = arr[0].Length;
+
+            for (int i = 0; i < row; i++)
+            {
+                for (int j = 0; j < col / 2; j++)
+                {
+                    int tmp = arr[i][j];
+                    arr[i][j] = arr[i][col - j - 1];
+                    arr[i][col - j - 1] = tmp;
+                }
+            }
+        }
+
+        // Transpose + ReverseVertical = RotateLeft
+        public static void ReverseVertical(int[][] arr)
+        {
+            int row = arr.Length;
+            int col = arr[0].Length;
+
+            for (int i = 0; i < row / 2; i++)
+            {
+                for (int j = 0; j < col; j++)
+                {
+                    int tmp = arr[i][j];
+                    arr[i][j] = arr[row - i - 1][j];
+                    arr[row - i - 1][j] = tmp;
+                }
+            }
+        }
+
+        public static int[,] RotateRight(int[,] arr)
         {
             int rows = arr.GetLength(0);
             int cols = arr.GetLength(1);
             var matrix = new int[cols, rows];
-            for (int i = 0; i < cols; i++)
-                for (int j = 0; j < rows; j++)
-                {
-                    matrix[i, j] = arr[j, i];
-                }
+            for (int row = rows - 1; row >= 0; row--)
+                for (int col = 0; col < cols; col++)
+                    matrix[col, rows - 1 - row] = arr[row, col];
+
             return matrix;
         }
 
@@ -45,18 +88,6 @@ namespace Algorithms
             return matrix;
         }
 
-        public static int[,] RotateRight(int[,] arr)
-        {
-            int rows = arr.GetLength(0);
-            int cols = arr.GetLength(1);
-            var matrix = new int[cols, rows];
-            for (int row = rows - 1; row >= 0; row--)
-                for (int col = 0; col < cols; col++)
-                    matrix[col, rows - 1 - row] = arr[row, col];
-
-            return matrix;
-        }
-
         // USAGE
         //int[,] grid = new int[4, 8] {
         //        { 0, 1, 1, 0, 1 ,0, 0, 0},
@@ -68,7 +99,7 @@ namespace Algorithms
         // distance to reach the furthest "0" from "1"
         static int FindFurthestDistanceInGrid(int rows, int cols, int[,] grid)
         {
-            UpdateMatrix(rows, cols, grid);
+            UpdateMatrixBFS(rows, cols, grid);
             int max = 0;
             for (int i = 0; i < rows; i++)
                 for (int j = 0; j < cols; j++)
@@ -78,7 +109,7 @@ namespace Algorithms
             return max;
         }
 
-        public static int[,] UpdateMatrix(int rows, int cols, int[,] matrix)
+        public static int[,] UpdateMatrixBFS(int rows, int cols, int[,] matrix)
         {
             Queue<(int, int)> queue = new Queue<(int, int)>();
 
@@ -123,6 +154,5 @@ namespace Algorithms
             }
             return matrix;
         }
-
     }
 }
