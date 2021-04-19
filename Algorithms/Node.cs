@@ -3,13 +3,21 @@ namespace Algorithms
 {
     public class Node
     {
-        public int data;
-        public Node left, right;
+        public int val;
+        public Node left, right, next;
 
         public Node(int item)
         {
-            data = item;
-            left = right = null;
+            val = item;
+            left = right = next = null;
+        }
+
+        public Node(int _val, Node _left, Node _right, Node _next)
+        {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
         }
     }
 }

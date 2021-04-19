@@ -24,7 +24,7 @@ namespace Algorithms
             if (root == null)
                 return;
             if (level == 1)
-                Console.Write(root.data + " ");
+                Console.Write(root.val + " ");
             else if (level > 1)
             {
                 printGivenLevel(root.left, level - 1);

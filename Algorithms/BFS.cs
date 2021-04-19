@@ -11,22 +11,23 @@ namespace Algorithms
         private static void Usage()
         {
             BFS tree = new BFS();
-            tree.root = new Node(1);
-            tree.root.left = new Node(2);
-            tree.root.right = new Node(3);
-            tree.root.left.left = new Node(4);
-            tree.root.left.right = new Node(5);
+            tree.Root = new Node(1);
+            tree.Root.left = new Node(2);
+            tree.Root.right = new Node(3);
+            tree.Root.left.left = new Node(4);
+            tree.Root.left.right = new Node(5);
 
             tree.PrintLevelOrder();
         }
 
-        public Node root;
+        public Node Root { get; set; }
+
         public void PrintLevelOrder()
         {
-            int rootHeight = GetHeight(root);
+            int rootHeight = GetHeight(Root);
 
             for (int i = 1; i <= rootHeight; i++)
-                PrintGivenLevel(root, i);
+                PrintGivenLevel(Root, i);
         }
 
         public void PrintGivenLevel(Node root,
@@ -35,7 +36,7 @@ namespace Algorithms
             if (root == null)
                 return;
             if (level == 1)
-                Console.Write(root.data + " ");
+                Console.Write(root.val + " ");
             else if (level > 1)
             {
                 PrintGivenLevel(root.left, level - 1);
@@ -64,6 +65,20 @@ namespace Algorithms
     {
         //Time Complexity: O(n) where n is number of nodes in the binary tree
         //Space Complexity: O(n) where n is number of nodes in the binary tree
+        public void BFSTree(Node node)
+        {
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(node);
+
+            while (queue.Count > 0)
+            {
+                node = queue.Dequeue();
+                Console.WriteLine(node.val);
+
+                if (node.left != null) queue.Enqueue(node.left);
+                if (node.right != null) queue.Enqueue(node.right);
+            }
+        }
 
         public Dictionary<int, List<int>> neighbours = new Dictionary<int, List<int>>();
 
@@ -75,7 +90,7 @@ namespace Algorithms
                 neighbours.Add(v, new List<int>() { w });
         }
 
-        public void BFS(int num)
+        public void BFSGraph(int num)
         {
             HashSet<int> visited = new HashSet<int> { num };
 
@@ -114,7 +129,7 @@ namespace Algorithms
             g.AddEdge(2, 0);
             g.AddEdge(2, 3);
 
-            g.BFS(2);
+            g.BFSGraph(2);
         }
 
     }

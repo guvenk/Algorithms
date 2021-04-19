@@ -42,9 +42,9 @@ namespace Algorithms
             }
 
             /* Otherwise, recur down the tree */
-            if (key < root.data)
+            if (key < root.val)
                 root.left = InsertRecursive(root.left, key);
-            else if (key > root.data)
+            else if (key > root.val)
                 root.right = InsertRecursive(root.right, key);
 
             /* return the (unchanged) node pointer */
