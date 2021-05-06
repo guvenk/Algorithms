@@ -41,13 +41,10 @@ namespace Algorithms
                 for (int y = 0; y < N; y++)
                     sol[x, y] = -1;
 
-
-            // Since the Knight is  
-            // initially at the first block 
+            // Since the Knight is initially at the first block 
             sol[0, 0] = 0;
 
-            /* Start from 0,0 and explore  
-            all tours using solveKTUtil() */
+            /* Start from 0,0 and explore */
             if (!SolveKTUtil(0, 0, 1, sol))
             {
                 Console.WriteLine("Solution does " +
