@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+#nullable enable
 
 namespace Algorithms
 {
@@ -27,70 +28,11 @@ namespace Algorithms
             //    Console.WriteLine(item);
             //}
 
-            Trie obj = new Trie();
-            obj.Insert("word");
+
 
             Console.ReadKey();
 
         }
-
-        public class TrieNode
-        {
-            public TrieNode[] Links { get; set; } = new TrieNode[26];
-            public bool IsEnd { get; set; }
-        }
-
-        public class Trie
-        {
-            private readonly TrieNode _root;
-
-            public Trie() => _root = new TrieNode();
-
-            public void Insert(string word)
-            {
-                TrieNode node = _root;
-                for (int i = 0; i < word.Length; i++)
-                {
-                    char ch = word[i];
-                    var temp = node.Links[ch - 'a'];
-                    if (temp is null)
-                        node.Links[ch - 'a'] = new TrieNode();
-
-                    node = node.Links[ch - 'a'];
-                }
-                node.IsEnd = true;
-            }
-
-            public bool Search(string word)
-            {
-                var node = StartsWith(word);
-                return node != null && node.IsEnd;
-            }
-
-            public TrieNode StartsWith(string prefix)
-            {
-                TrieNode node = _root;
-                for (int i = 0; i < prefix.Length; i++)
-                {
-                    char ch = prefix[i];
-                    var temp = node.Links[ch - 'a'];
-                    if (temp is null)
-                        return null;
-                    else
-                        node = temp;
-                }
-
-                return node;
-            }
-        }
-
-
-
-
-
-
-
-
 
 
         private static void Util(string prev, int x, int y, HashSet<(int X, int Y)> path, char[][] board, HashSet<string> words)

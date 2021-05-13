@@ -65,10 +65,6 @@ namespace Algorithms
 
     public class SimpleDFS
     {
-        public SimpleDFS(int[,] arr)
-        {
-
-        }
         void Usage()
         {
             char[][] grid = new char[][]

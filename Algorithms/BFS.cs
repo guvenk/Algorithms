@@ -67,7 +67,7 @@ namespace Algorithms
         //Space Complexity: O(n) where n is number of nodes in the binary tree
         public void BFSTree(Node node)
         {
-            Queue<Node> queue = new Queue<Node>();
+            var queue = new Queue<Node>();
             queue.Enqueue(node);
 
             while (queue.Count > 0)
@@ -75,10 +75,24 @@ namespace Algorithms
                 node = queue.Dequeue();
                 Console.WriteLine(node.val);
 
-                if (node.left != null) queue.Enqueue(node.left);
                 if (node.right != null) queue.Enqueue(node.right);
+                if (node.left != null) queue.Enqueue(node.left);
             }
         }
+        // Usage
+        //var graph = new GraphBFS();
+
+        //var node = new Node(1)
+        //{
+        //    left = new Node(2)
+        //    {
+        //        left = new Node(4),
+        //        right = new Node(5)
+        //    },
+        //    right = new Node(3)
+        //};
+
+        //graph.BFSTree(node);
 
         public Dictionary<int, List<int>> neighbours = new Dictionary<int, List<int>>();
 
