@@ -3,19 +3,23 @@ namespace Algorithms
 {
     public class TrieNode
     {
+        public string Word = null;
         public TrieNode[] Links { get; set; } = new TrieNode[26];
         public bool IsEnd { get; set; }
+
+        public bool ContainsKey(char ch) => ch != '#' && Links[ch - 'a'] != null;
     }
+
     // Assuming only lowercase chars are used
     public class Trie
     {
-        private readonly TrieNode _root;
+        public readonly TrieNode Root;
 
-        public Trie() => _root = new TrieNode();
+        public Trie() => Root = new TrieNode();
 
         public void Insert(string word)
         {
-            TrieNode node = _root;
+            TrieNode node = Root;
             for (int i = 0; i < word.Length; i++)
             {
                 char ch = word[i];
@@ -26,7 +30,9 @@ namespace Algorithms
                 node = node.Links[ch - 'a'];
             }
             node.IsEnd = true;
+            node.Word = word;
         }
+
 
         public bool Search(string word)
         {
@@ -41,7 +47,7 @@ namespace Algorithms
 
         public TrieNode SearchPrefixWith(string prefix)
         {
-            TrieNode node = _root;
+            TrieNode node = Root;
             for (int i = 0; i < prefix.Length; i++)
             {
                 char ch = prefix[i];
