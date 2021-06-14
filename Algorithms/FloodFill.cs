@@ -5,8 +5,8 @@ namespace Algorithms
     public class FloodFill
     {
         // Dimentions of paint screen 
-        static readonly int M = 8;
-        static readonly int N = 8;
+        private static readonly int M = 8;
+        private static readonly int N = 8;
 
         public static void Usage()
         {
@@ -34,7 +34,7 @@ namespace Algorithms
             }
         }
 
-        static void FloodFillUtil(int[,] screen, int x, int y, int oldValue, int newValue)
+        private static void FloodFillUtil(int[,] screen, int x, int y, int oldValue, int newValue)
         {
             // Base cases 
             if (x < 0 || x >= M ||

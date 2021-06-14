@@ -10,7 +10,7 @@ namespace Algorithms
         private readonly List<int>[] neighbours;
 
         // Constructor  
-        GraphDFS(int v)
+        private GraphDFS(int v)
         {
             V = v;
             neighbours = new List<int>[v];
@@ -19,13 +19,13 @@ namespace Algorithms
         }
 
         //Function to Add an edge into the graph  
-        void AddEdge(int v, int w)
+        private void AddEdge(int v, int w)
         {
             neighbours[v].Add(w); // Add w to v's list.  
         }
 
         // A function used by DFS  
-        void DFS(int v, bool[] visited)
+        private void DFS(int v, bool[] visited)
         {
             // Mark the current node as visited 
             // and print it  
@@ -65,7 +65,7 @@ namespace Algorithms
 
     public class SimpleDFS
     {
-        void Usage()
+        private void Usage()
         {
             char[][] grid = new char[][]
             {

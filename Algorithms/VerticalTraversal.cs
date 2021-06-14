@@ -24,7 +24,7 @@ namespace Algorithms
             PrintVerticalOrder(root);
         }
 
-        static void PrintVerticalOrder(TreeNode root)
+        private static void PrintVerticalOrder(TreeNode root)
         {
             SortedDictionary<int, List<int>> verticalOrders = new SortedDictionary<int, List<int>>();
             int hd = 0;
@@ -37,7 +37,7 @@ namespace Algorithms
             }
         }
 
-        static void GetVerticalOrder(TreeNode root, int horDist, SortedDictionary<int, List<int>> dictionary)
+        private static void GetVerticalOrder(TreeNode root, int horDist, SortedDictionary<int, List<int>> dictionary)
         {
             // Base case 
             if (root == null)

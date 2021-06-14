@@ -4,20 +4,20 @@ namespace Algorithms
 {
     public static class Backtracking
     {
-        static readonly int N = 8;
+        private static readonly int N = 8;
         /* xMove[] and yMove[] define 
                next move of Knight. */
-        static readonly int[] X_move = { 2, 1, -1, -2, -2, -1, 1, 2 };
-        static readonly int[] Y_move = { 1, 2, 2, 1, -1, -2, -2, -1 };
+        private static readonly int[] X_move = { 2, 1, -1, -2, -2, -1, 1, 2 };
+        private static readonly int[] Y_move = { 1, 2, 2, 1, -1, -2, -2, -1 };
 
-        static bool IsSafe(int x, int y, int[,] solution)
+        private static bool IsSafe(int x, int y, int[,] solution)
         {
             return (x >= 0 && x < N &&
                     y >= 0 && y < N &&
                     solution[x, y] == -1);
         }
 
-        static void PrintSolution(int[,] solution)
+        private static void PrintSolution(int[,] solution)
         {
             Console.WriteLine();
             for (int x = 0; x < N; x++)
@@ -59,7 +59,7 @@ namespace Algorithms
 
         /* A recursive utility function  
         to solve Knight Tour problem */
-        static bool SolveKTUtil(int x, int y, int moveNum, int[,] solution)
+        private static bool SolveKTUtil(int x, int y, int moveNum, int[,] solution)
         {
             int k, next_x, next_y;
             if (moveNum == N * N)

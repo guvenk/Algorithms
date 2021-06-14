@@ -6,7 +6,7 @@ namespace Algorithms
 {
     public class BST
     {
-        Node root;
+        private Node root;
         public Queue<Node> queue;
 
         public BST()
@@ -56,7 +56,7 @@ namespace Algorithms
             InorderRecursive(root);
         }
 
-        void InorderRecursive(Node node)
+        private void InorderRecursive(Node node)
         {
             if (node != null)
             {

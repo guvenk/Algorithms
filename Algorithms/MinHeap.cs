@@ -67,15 +67,15 @@ namespace Algorithms
             }
         }
 
-        int GetParent(int index)
+        private int GetParent(int index)
         {
             if (index <= 0)
                 return -1;
             return (index - 1) / 2;
         }
 
-        int GetLeft(int index) { return 2 * index + 1; }
+        private int GetLeft(int index) { return 2 * index + 1; }
 
-        int GetRight(int index) { return 2 * index + 2; }
+        private int GetRight(int index) { return 2 * index + 2; }
     }
 }

@@ -94,12 +94,12 @@ namespace Algorithms
         }
 
         // string rotation
-        static string ShiftLeft(string s, int count)
+        private static string ShiftLeft(string s, int count)
         {
             return s.Remove(0, count) + s.Substring(0, count);
         }
 
-        static string ShiftRight(string s, int count)
+        private static string ShiftRight(string s, int count)
         {
             return s.Remove(0, s.Length - count) + s.Substring(0, s.Length - count);
         }
@@ -273,7 +273,7 @@ namespace Algorithms
         }
 
 
-        static string LCSubStr(string X, string Y)
+        private static string LCSubStr(string X, string Y)
         {
             int[,] LCSuff = new int[X.Length + 1, Y.Length + 1];
             int len = 0;

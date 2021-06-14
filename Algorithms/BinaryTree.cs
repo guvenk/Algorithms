@@ -19,7 +19,7 @@ namespace Algorithms
                 printGivenLevel(root, i);
         }
 
-        void printGivenLevel(Node root, int level)
+        private void printGivenLevel(Node root, int level)
         {
             if (root == null)
                 return;
@@ -32,7 +32,7 @@ namespace Algorithms
             }
         }
 
-        int height(Node root)
+        private int height(Node root)
         {
             if (root == null)
                 return 0;
@@ -45,7 +45,7 @@ namespace Algorithms
             }
         }
 
-        void Usage()
+        private void Usage()
         {
             BinaryTree tree = new BinaryTree();
             tree.root = new Node(1);

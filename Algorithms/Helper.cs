@@ -8,7 +8,7 @@ namespace Algorithms
 {
     public class Helper
     {
-        static int NumOfSquares(int l, int w)
+        private static int NumOfSquares(int l, int w)
         {
             int squareSide = Gcd(l, w);
             return (l * w) / (squareSide * squareSide);
@@ -38,7 +38,7 @@ namespace Algorithms
             return dict.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
         }
 
-        static List<int> RotationsOfNumber(int num)
+        private static List<int> RotationsOfNumber(int num)
         {
             List<int> list = new List<int>();
             int d1 = (int)Math.Log10(num) + 1;

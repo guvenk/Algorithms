@@ -16,7 +16,7 @@ namespace Algorithms
             }
         }
 
-        static int[] PushZerosToEndOfArray(int[] arr)
+        private static int[] PushZerosToEndOfArray(int[] arr)
         {
             int count = 0;
             for (int i = 0; i < arr.Length; i++)
@@ -47,7 +47,7 @@ namespace Algorithms
         }
 
         // shifts array elements to left by d
-        static int[] LeftRotate(int[] a, int d)
+        private static int[] LeftRotate(int[] a, int d)
         {
             int i, j, k, temp;
             for (i = 0; i < Helper.Gcd(d, a.Length); i++)
@@ -69,7 +69,7 @@ namespace Algorithms
             return a;
         }
 
-        static int GcdOfArray(int[] arr)
+        private static int GcdOfArray(int[] arr)
         {
             int result = arr[0];
             for (int i = 1; i < arr.Length; i++)
@@ -121,7 +121,7 @@ namespace Algorithms
         }
 
 
-        static int MaxSubArraySum(int[] a)
+        private static int MaxSubArraySum(int[] a)
         {
             // Kadane's Alg
             int size = a.Length;
@@ -142,7 +142,7 @@ namespace Algorithms
             return max_so_far;
         }
 
-        static List<int> GetDivisors(int n)
+        private static List<int> GetDivisors(int n)
         {
             var list = new List<int>();
 

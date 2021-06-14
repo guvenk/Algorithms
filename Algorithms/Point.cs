@@ -6,7 +6,7 @@
         public int X { get; set; }
         public int Y { get; set; }
 
-        bool DoOverlap(Point l1, Point r1, Point l2, Point r2)
+        private bool DoOverlap(Point l1, Point r1, Point l2, Point r2)
         {
             // If one rectangle is on left side of other
             if (l1.X > r2.X || l2.X > r1.X)

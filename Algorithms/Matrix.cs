@@ -93,7 +93,7 @@ namespace Algorithms
         //var result2 = MinHoursGuven(4, 8, grid);
         //Console.WriteLine(result2);
         // distance to reach the furthest "0" from "1"
-        static int FindFurthestDistanceInGrid(int rows, int cols, int[,] grid)
+        private static int FindFurthestDistanceInGrid(int rows, int cols, int[,] grid)
         {
             UpdateMatrixBFS(rows, cols, grid);
             int max = 0;

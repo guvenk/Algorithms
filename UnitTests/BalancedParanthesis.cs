@@ -32,7 +32,7 @@ namespace UnitTests
             return "YES";
         }
 
-        static bool IsMatching(char ch, char close) => ch == '{' && close == '}' || ch == '(' && close == ')' || ch == '[' && close == ']';
+        private static bool IsMatching(char ch, char close) => ch == '{' && close == '}' || ch == '(' && close == ')' || ch == '[' && close == ']';
 
     }
 }

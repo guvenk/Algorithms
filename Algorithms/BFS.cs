@@ -132,7 +132,7 @@ namespace Algorithms
             }
         }
 
-        void Usage()
+        private void Usage()
         {
             GraphBFS g = new GraphBFS();
 

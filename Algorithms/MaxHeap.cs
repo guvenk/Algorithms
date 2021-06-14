@@ -13,8 +13,8 @@ namespace Algorithms
 
     public class MaxHeap
     {
-        HeapNode[] arr;
-        int count;
+        private HeapNode[] arr;
+        private int count;
 
         private int GetLeftChild(int pos)
         {

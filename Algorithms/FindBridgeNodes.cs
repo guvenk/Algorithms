@@ -7,7 +7,7 @@ namespace Algorithms
     // Check if removing a given edge disconnects a graph
     // https://www.geeksforgeeks.org/check-removing-given-edge-disconnects-given-graph/
     // graph.IsBridge(2, 3)
-    class FindBridgeNodes
+    internal class FindBridgeNodes
     {
         public int FirstVertex { get; internal set; }
         public static Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
@@ -36,7 +36,7 @@ namespace Algorithms
             adj[w].Remove(v);
         }
 
-        void DFS(int v, Dictionary<int, bool> visited)
+        private void DFS(int v, Dictionary<int, bool> visited)
         {
             visited[v] = true;
 
@@ -46,7 +46,7 @@ namespace Algorithms
                     DFS(i, visited);
         }
 
-        bool IsConnected()
+        private bool IsConnected()
         {
             Dictionary<int, bool> visited = new Dictionary<int, bool>();
             foreach (var item in adj)
