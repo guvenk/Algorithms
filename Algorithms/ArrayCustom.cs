@@ -29,6 +29,20 @@ namespace Algorithms
             return arr;
         }
 
+        public int MaxSubArray(int[] nums)
+        {
+            int currentSubarray = nums[0];
+            int maxSubarray = nums[0];
+
+            for (int i = 1; i < nums.Length; i++)
+            {
+                currentSubarray = Math.Max(nums[i], currentSubarray + nums[i]);
+                maxSubarray = Math.Max(maxSubarray, currentSubarray);
+            }
+
+            return maxSubarray;
+        }
+
         //check for a pair of numbers in A[] with sum equal to x
         public static void TwoSum(int[] arr, int sum)
         {
@@ -118,28 +132,6 @@ namespace Algorithms
             int n = ar.Length;
             double median = (ar[n / 2] + ar[(n - 1) / 2]) / 2.0;
             return median;
-        }
-
-
-        private static int MaxSubArraySum(int[] a)
-        {
-            // Kadane's Alg
-            int size = a.Length;
-            int max_so_far = int.MinValue,
-                max_ending_here = 0;
-
-            for (int i = 0; i < size; i++)
-            {
-                max_ending_here += a[i];
-
-                if (max_so_far < max_ending_here)
-                    max_so_far = max_ending_here;
-
-                if (max_ending_here < 0)
-                    max_ending_here = 0;
-            }
-
-            return max_so_far;
         }
 
         private static List<int> GetDivisors(int n)
