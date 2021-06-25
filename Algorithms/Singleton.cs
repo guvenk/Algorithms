@@ -10,18 +10,8 @@ namespace Algorithms
     {
         private static Singleton _instance;
 
-        private Singleton()
-        {
-        }
+        private Singleton() { }
 
-        public static Singleton GetInstance()
-        {
-            if (_instance is null)
-            {
-                _instance = new Singleton();
-            }
-
-            return _instance;
-        }
+        public static Singleton GetInstance() => _instance ??= new Singleton();
     }
 }

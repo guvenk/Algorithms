@@ -25,7 +25,7 @@ namespace Algorithms
         public T PopMin()
         {
             T item = elements[0];
-            elements[0] = elements[elements.Count - 1];
+            elements[0] = elements[^1];
             elements.RemoveAt(elements.Count - 1);
 
             HeapifyDown(0);
@@ -37,12 +37,17 @@ namespace Algorithms
             var parent = GetParent(index);
             if (parent >= 0 && elements[index].CompareTo(elements[parent]) < 0)
             {
-                var temp = elements[index];
-                elements[index] = elements[parent];
-                elements[parent] = temp;
+                Swap(index, parent);
 
                 HeapifyUp(parent);
             }
+        }
+
+        private void Swap(int i, int j)
+        {
+            var temp = elements[i];
+            elements[i] = elements[j];
+            elements[j] = temp;
         }
 
         public void HeapifyDown(int index)
@@ -59,9 +64,7 @@ namespace Algorithms
 
             if (smallest != index)
             {
-                var temp = elements[index];
-                elements[index] = elements[smallest];
-                elements[smallest] = temp;
+                Swap(index, smallest);
 
                 HeapifyDown(smallest);
             }
@@ -74,8 +77,8 @@ namespace Algorithms
             return (index - 1) / 2;
         }
 
-        private int GetLeft(int index) { return 2 * index + 1; }
+        private int GetLeft(int index) => 2 * index + 1;
 
-        private int GetRight(int index) { return 2 * index + 2; }
+        private int GetRight(int index) => 2 * index + 2;
     }
 }
