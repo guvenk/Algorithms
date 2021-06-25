@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Algorithms.Graph
 {
-    public class Graph
+    public class UndirectedGraph
     {
         private Dictionary<int, List<int>> _neighbors;
 
         bool IsCyclic(int node, bool[] visited, int parent)
         {
-            // for undirected
             visited[node] = true;
 
             foreach (int neighbor in _neighbors[node])
@@ -33,7 +32,6 @@ namespace Algorithms.Graph
 
         public void BuildGraph(int[][] edges)
         {
-            // for undirected
             _neighbors = new Dictionary<int, List<int>>();
 
             for (int i = 0; i < edges.Length; i++)
@@ -47,7 +45,6 @@ namespace Algorithms.Graph
                 _neighbors[edges[i][0]].Add(edges[i][1]);
                 _neighbors[edges[i][1]].Add(edges[i][0]);
             }
-
         }
     }
 }
