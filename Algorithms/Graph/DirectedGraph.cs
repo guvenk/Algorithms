@@ -17,12 +17,13 @@ namespace Algorithms.Graph
 
             if (path[node]) return true;
 
-            if (!_neighbors.ContainsKey(node)) return false;
-
-            path[node] = true;
-            foreach (var neighbor in _neighbors[node])
-                if (HasCycle(neighbor, path, visited)) return true;
-            path[node] = false;
+            if (_neighbors.ContainsKey(node))
+            {
+                path[node] = true;
+                foreach (var neighbor in _neighbors[node])
+                    if (HasCycle(neighbor, path, visited)) return true;
+                path[node] = false;
+            }
 
             visited[node] = true;
 
