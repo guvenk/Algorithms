@@ -12,13 +12,6 @@ namespace Algorithms
         {
             var s = new Solution();
 
-            int[][] abc = new int[][] {
-                new int[]{ 1, 0 },
-                new int[]{ 2, 0 },
-                new int[]{ 3, 1 },
-                new int[]{ 3, 2 }
-            };
-
             //FreqStack freqStack = new FreqStack();
             //freqStack.Push(5); // The stack is [5]
             //freqStack.Push(7); // The stack is [5,7]
@@ -33,138 +26,92 @@ namespace Algorithms
             //re = freqStack.Pop();   // return 5, as 5 is the most frequent. The stack becomes [5,7,4].
             //Console.WriteLine(re);
             //re = freqStack.Pop();   // return 4, as 4, 5 and 7 is the most frequent, but 4 is closest to the top. The stack becomes [5,7].
-            //Console.WriteLine(re);
+            //Console.WriteLine(re);    
 
             //re = freqStack.Pop();
             //Console.WriteLine(re);
 
             //re = freqStack.Pop();
             //Console.WriteLine(re);
+            //var root = new TreeNode(3);
+            //root.left = new TreeNode(5);
+            //root.left.left = new TreeNode(6);
+            //root.left.right = new TreeNode(2);
+            //root.left.right.left = new TreeNode(7);
+            //root.left.right.right = new TreeNode(4);
+            //root.right = new TreeNode(1);
+            //root.right.left = new TreeNode(0);
+            //root.right.right = new TreeNode(8);
+            // https://assets.leetcode.com/uploads/2018/12/14/binarytree.png
 
-            int[] input = new[] { 1, 0, 0, 1, 0, 0, 1, 0 };
-            int[] vs = s.PrisonAfterNDays(input, 1000000000);
-            Console.WriteLine(vs);
-            Console.WriteLine("Finished");
+
+
             Console.ReadKey();
         }
 
-        //  Input: s = "ababcbacadefegdehijhklij"
-        //  Output: [9,7,8]
-        //  The partition is "ababcbaca", "defegde", "hijhklij".
-        public IList<int> PartitionLabels(string s)
+        int rootIndex = 0;
+        readonly Dictionary<int, int> map = new();
+        public TreeNode BuildTree(int[] preorder, int[] inorder)
         {
-            int[] last = new int[26];
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < inorder.Length; i++)
             {
-                last[s[i] - 'a'] = i;
+                map.Add(inorder[i], i);
             }
 
-            var list = new List<int>();
-            int j = 0, anchor = 0;
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                j = Math.Max(j, last[s[i] - 'a']);
-                if (i == j)
-                {
-                    list.Add(i - anchor + 1);
-                    anchor = i + 1;
-                }
-            }
-
-            return list;
-
+            return CreateTree(preorder, 0, preorder.Length - 1);
         }
 
-        //Day 0: [0, 1, 0, 1, 1, 0, 0, 1]
-        //Day 1: [0, 1, 1, 0, 0, 0, 0, 0]
-        //Day 2: [0, 0, 0, 0, 1, 1, 1, 0]
-        //Day 3: [0, 1, 1, 0, 0, 1, 0, 0]
-        //Day 4: [0, 0, 0, 0, 0, 1, 0, 0]
-        //Day 5: [0, 1, 1, 1, 0, 1, 0, 0]
-        //Day 6: [0, 0, 1, 0, 1, 1, 0, 0]
-        //Day 7: [0, 0, 1, 1, 0, 0, 0, 0]
-        public int[] PrisonAfterNDays(int[] cells, int n)
+        private TreeNode CreateTree(int[] preorder, int left, int right)
         {
-            bool isFastForwarded = false;
-            var dict = new Dictionary<string, int>();
+            if (left > right) return null;
 
-            var temp = new int[cells.Length];
-            cells.CopyTo(temp, 0);
+            int rootValue = preorder[rootIndex++];
+            var root = new TreeNode(rootValue);
 
-            while (n > 0)
-            {
-                if (!isFastForwarded)
-                {
-                    string state = string.Join("", cells);
-                    if (dict.ContainsKey(state))
-                    {
-                        n %= dict[state] - n;
-                        isFastForwarded = true;
-                    }
-                    else
-                        dict.Add(state, n);
-                }
-                if (n > 0)
-                {
-                    n--;
-                    NextDay(cells, temp);
-                }
-            }
+            root.left = CreateTree(preorder, left, map[rootValue] - 1);
+            root.right = CreateTree(preorder, map[rootValue] + 1, right);
 
-            return cells;
+            return root;
         }
 
-        private static void NextDay(int[] cells, int[] temp)
-        {
-            for (int i = 0; i < temp.Length; i++)
-            {
-                if (i > 0 && i < temp.Length - 1 && cells[i - 1] == cells[i + 1])
-                    temp[i] = 1;
-                else
-                    temp[i] = 0;
-            }
-            temp.CopyTo(cells, 0);
-        }
-
-        public class FreqStack
-        {
-            readonly Dictionary<int, int> _freq;
-            readonly Dictionary<int, Stack<int>> _group;
-            int _maxFreq;
-
-            public FreqStack()
-            {
-                _freq = new Dictionary<int, int>();
-                _group = new Dictionary<int, Stack<int>>();
-            }
-
-            public void Push(int val)
-            {
-                if (!_freq.ContainsKey(val))
-                    _freq.Add(val, 0);
-
-                var freq = ++_freq[val];
-                _maxFreq = Math.Max(_maxFreq, freq);
-
-                if (!_group.ContainsKey(freq))
-                    _group.Add(freq, new Stack<int>());
-
-                _group[freq].Push(val);
-            }
-
-            public int Pop()
-            {
-                int x = _group[_maxFreq].Pop();
-                _freq[x]--;
-
-                if (_group[_maxFreq].Count == 0)
-                    _maxFreq--;
-
-                return x;
-            }
-        }
     }
 
 
+    public class FreqStack
+    {
+        readonly Dictionary<int, int> _freq;
+        readonly Dictionary<int, Stack<int>> _group;
+        int _maxFreq;
+
+        public FreqStack()
+        {
+            _freq = new Dictionary<int, int>();
+            _group = new Dictionary<int, Stack<int>>();
+        }
+
+        public void Push(int val)
+        {
+            if (!_freq.ContainsKey(val))
+                _freq.Add(val, 0);
+
+            var freq = ++_freq[val];
+            _maxFreq = Math.Max(_maxFreq, freq);
+
+            if (!_group.ContainsKey(freq))
+                _group.Add(freq, new Stack<int>());
+
+            _group[freq].Push(val);
+        }
+
+        public int Pop()
+        {
+            int x = _group[_maxFreq].Pop();
+            _freq[x]--;
+
+            if (_group[_maxFreq].Count == 0)
+                _maxFreq--;
+
+            return x;
+        }
+    }
 }

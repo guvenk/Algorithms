@@ -142,13 +142,12 @@ namespace Algorithms
         public static ListNode ReverseList(ListNode head)
         {
             ListNode prev = null;
-            ListNode curr = head;
-            while (curr != null)
+            while (head != null)
             {
-                ListNode nextTemp = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = nextTemp;
+                var temp = head.next;
+                head.next = prev;
+                prev = head;
+                head = temp;
             }
             return prev;
         }

@@ -1,84 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Algorithms
 {
-    public class MinHeap<T> where T : IComparable
+    public class MinHeap
     {
-        public List<T> elements = new List<T>();
+        public List<int> items = new();
 
-        public T GetRoot() { return elements[0]; }
+        public int GetRoot() => items[0];
 
-        public void Add(T item)
+        public void Add(int item)
         {
-            elements.Add(item);
-            HeapifyUp(elements.Count - 1);
+            items.Add(item);
+            HeapifyUp(items.Count - 1);
         }
 
-        public void ReplaceMin(T x)
+        public void ReplaceMin(int x)
         {
-            elements[0] = x;
-            HeapifyDown(0);
+            items[0] = x;
+            HeapifyDown();
         }
 
-        public T PopMin()
+        public int PopMin()
         {
-            T item = elements[0];
-            elements[0] = elements[^1];
-            elements.RemoveAt(elements.Count - 1);
+            int item = items[0];
+            items[0] = items[^1];
+            items.RemoveAt(items.Count - 1);
+            HeapifyDown();
 
-            HeapifyDown(0);
             return item;
         }
 
         public void HeapifyUp(int index)
         {
             var parent = GetParent(index);
-            if (parent >= 0 && elements[index].CompareTo(elements[parent]) < 0)
+            if (parent >= 0 && items[index].CompareTo(items[parent]) < 0)
             {
                 Swap(index, parent);
-
                 HeapifyUp(parent);
+            }
+        }
+
+        public void HeapifyDown()
+        {
+            int index = 0;
+            while (GetLeft(index) < items.Count)
+            {
+                var smallerChildIndex = GetLeft(index);
+                var right = GetRight(index);
+
+                if (right < items.Count && items[right].CompareTo(items[smallerChildIndex]) < 0)
+                    smallerChildIndex = right;
+
+                if (items[smallerChildIndex] < items[index])
+                {
+                    Swap(index, smallerChildIndex);
+                    index = smallerChildIndex;
+                }
             }
         }
 
         private void Swap(int i, int j)
         {
-            var temp = elements[i];
-            elements[i] = elements[j];
-            elements[j] = temp;
+            var temp = items[i];
+            items[i] = items[j];
+            items[j] = temp;
         }
 
-        public void HeapifyDown(int index)
+        private static int GetParent(int index)
         {
-            var smallest = index;
-            var left = GetLeft(index);
-            var right = GetRight(index);
-
-            if (left < elements.Count && elements[left].CompareTo(elements[index]) < 0)
-                smallest = left;
-
-            if (right < elements.Count && elements[right].CompareTo(elements[smallest]) < 0)
-                smallest = right;
-
-            if (smallest != index)
-            {
-                Swap(index, smallest);
-
-                HeapifyDown(smallest);
-            }
-        }
-
-        private int GetParent(int index)
-        {
-            if (index <= 0)
-                return -1;
+            if (index <= 0) return -1;
             return (index - 1) / 2;
         }
 
-        private int GetLeft(int index) => 2 * index + 1;
+        private static int GetLeft(int index) => 2 * index + 1;
 
-        private int GetRight(int index) => 2 * index + 2;
+        private static int GetRight(int index) => 2 * index + 2;
     }
 }

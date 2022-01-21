@@ -114,5 +114,17 @@ namespace Algorithms
             DFS(grid, row, col - 1);
         }
 
+        // Inorder traversal of a treenode
+        public void Inorder(TreeNode node)
+        {
+            if (node == null)
+                return;
+
+            Inorder(node.left);
+            Console.WriteLine(node.val);
+            Inorder(node.right);
+
+            return;
+        }
     }
 }

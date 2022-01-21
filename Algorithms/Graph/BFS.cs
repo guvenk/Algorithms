@@ -30,8 +30,7 @@ namespace Algorithms
                 PrintGivenLevel(Root, i);
         }
 
-        public void PrintGivenLevel(Node root,
-                                           int level)
+        public void PrintGivenLevel(Node root, int level)
         {
             if (root == null)
                 return;
@@ -43,6 +42,7 @@ namespace Algorithms
                 PrintGivenLevel(root.right, level - 1);
             }
         }
+
         public int GetHeight(Node root)
         {
             if (root == null)
