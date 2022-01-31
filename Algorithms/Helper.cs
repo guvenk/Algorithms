@@ -180,7 +180,7 @@ namespace Algorithms
     // usage:
     //IComparer myComparer = new MyClass();
     //Array.Sort(arr, myComparer);
-    public class MyClass : IComparer
+    public class MyCustomComparer : IComparer
     {
         public int Compare(object x, object y)
         {

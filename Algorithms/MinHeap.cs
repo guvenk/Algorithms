@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Algorithms
 {
@@ -35,10 +33,10 @@ namespace Algorithms
         public void HeapifyUp(int index)
         {
             var parent = GetParent(index);
-            if (parent >= 0 && items[index].CompareTo(items[parent]) < 0)
+            while (parent >= 0 && items[index] < items[parent])
             {
                 Swap(index, parent);
-                HeapifyUp(parent);
+                index = parent;
             }
         }
 
