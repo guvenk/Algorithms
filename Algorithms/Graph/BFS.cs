@@ -116,8 +116,7 @@ namespace Algorithms
                 num = queue.Dequeue();
                 Console.Write(num + " ");
 
-                // check if it has neighbours
-                if (neighbours.Keys.Contains(num))
+                if (neighbours.ContainsKey(num))
                 {
                     List<int> neighbors = neighbours[num];
                     foreach (var n in neighbors)

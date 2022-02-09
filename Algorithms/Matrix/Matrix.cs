@@ -108,7 +108,7 @@ namespace Algorithms
         public static int[,] UpdateMatrixBFS(int rows, int cols, int[,] matrix)
         {
             Queue<(int, int)> queue = new Queue<(int, int)>();
-
+            
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
