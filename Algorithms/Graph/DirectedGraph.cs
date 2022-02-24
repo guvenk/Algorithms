@@ -14,7 +14,8 @@ namespace Algorithms.Graph
             if (visited[node])
                 return false;
 
-            if (path[node]) return true;
+            if (path[node]) 
+                return true;
 
             if (adj.ContainsKey(node))
             {

@@ -1,10 +1,17 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Algorithms
 {
     public class Node
     {
         public int val;
         public Node left, right, next;
+        public IList<Node> children;
+
+        public Node()
+        {
+        }
 
         public Node(int item)
         {
